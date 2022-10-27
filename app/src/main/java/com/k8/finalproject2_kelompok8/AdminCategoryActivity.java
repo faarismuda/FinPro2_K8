@@ -1,16 +1,18 @@
 package com.k8.finalproject2_kelompok8;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminCategoryActivity extends AppCompatActivity {
     private ImageView tShirts, sportsTShirts, femaleDresses, sweathers;
     private ImageView glasses, hatsCaps, walletsBagsPurses, shoes;
     private ImageView headPhonesHandFree, Laptops, watches, mobilePhones;
+    private Button AddNewStaffButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,21 @@ public class AdminCategoryActivity extends AppCompatActivity {
         watches = (ImageView) findViewById(R.id.watches);
         mobilePhones = (ImageView) findViewById(R.id.mobilephones);
 
+        AddNewStaffButton = (Button) findViewById(R.id.add_new_staff);
+
+        AddNewStaffButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewStaffActivity.class);
+                intent.putExtra("category", "tShirts");
+                startActivity(intent);
+            }
+        });
+
         tShirts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
-                intent.putExtra("category", "tShirts");
                 startActivity(intent);
             }
         });

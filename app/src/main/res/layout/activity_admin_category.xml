@@ -124,4 +124,20 @@
             android:src="@drawable/mobiles"
             android:layout_marginStart="16dp"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/add_new_staff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear3_category_layout"
+        android:layout_marginTop="160dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/buttons"
+        android:padding="17dp"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:text="Add New Staff"
+        android:textColor="@color/white"
+        />
 </RelativeLayout>
