@@ -49,30 +49,40 @@
         android:textSize="17sp">
     </EditText>
 
-    <LinearLayout
-        android:id="@+id/linear_layout_1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/staff_panel_link"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/login_password_input"
-        android:layout_marginTop="5dp">
-        
-        <TextView
-            android:id="@+id/forget_password_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forget Password"
-            android:textColor="@color/blue"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:layout_marginLeft="240dp"/>
-    </LinearLayout>
+        android:text="I'm an Staff?"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/login_password_input"
+        android:textColor="@color/blue"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginEnd="23dp"/>
+
+    <TextView
+        android:id="@+id/not_staff_panel_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I'm not an Staff?"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/login_password_input"
+        android:textColor="@color/blue"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="25dp"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linear_layout_1"
+        android:layout_below="@id/staff_panel_link"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"

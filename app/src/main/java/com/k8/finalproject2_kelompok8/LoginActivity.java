@@ -1,8 +1,5 @@
 package com.k8.finalproject2_kelompok8;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText InputPhoneNumber, InputPassword;
     private Button LoginButton;
     private ProgressDialog loadingBar;
-    private TextView AdminLink, NotAdminLink;
+    private TextView AdminLink, NotAdminLink, StaffLink, NotStaffLink;
 
     private String parentDbName = "Users";
 
@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         InputPhoneNumber = (EditText) findViewById(R.id.login_phone_number_input);
         AdminLink = (TextView) findViewById(R.id.admin_panel_link);
         NotAdminLink = (TextView) findViewById(R.id.not_admin_panel_link);
+        StaffLink = (TextView) findViewById(R.id.staff_panel_link);
+        NotStaffLink = (TextView) findViewById(R.id.not_staff_panel_link);
         loadingBar = new ProgressDialog(this);
 
         Paper.init(this);
@@ -58,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                 LoginButton.setText("Login Admin");
                 AdminLink.setVisibility(View.INVISIBLE);
                 NotAdminLink.setVisibility(View.VISIBLE);
+                StaffLink.setVisibility(View.INVISIBLE);
+                NotStaffLink.setVisibility(View.INVISIBLE);
                 parentDbName = "Admins";
             }
         });
@@ -68,6 +72,32 @@ public class LoginActivity extends AppCompatActivity {
                 LoginButton.setText("Login");
                 AdminLink.setVisibility(View.VISIBLE);
                 NotAdminLink.setVisibility(View.INVISIBLE);
+                StaffLink.setVisibility(View.VISIBLE);
+                NotStaffLink.setVisibility(View.INVISIBLE);
+                parentDbName = "Users";
+            }
+        });
+
+        StaffLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginButton.setText("Login Staff");
+                AdminLink.setVisibility(View.INVISIBLE);
+                NotAdminLink.setVisibility(View.INVISIBLE);
+                StaffLink.setVisibility(View.INVISIBLE);
+                NotStaffLink.setVisibility(View.VISIBLE);
+                parentDbName = "Staffs";
+            }
+        });
+
+        NotStaffLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginButton.setText("Login");
+                AdminLink.setVisibility(View.VISIBLE);
+                NotAdminLink.setVisibility(View.INVISIBLE);
+                StaffLink.setVisibility(View.VISIBLE);
+                NotStaffLink.setVisibility(View.INVISIBLE);
                 parentDbName = "Users";
             }
         });
@@ -113,6 +143,12 @@ public class LoginActivity extends AppCompatActivity {
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
+                                startActivity(intent);
+                            } else if (parentDbName.equals("Staffs")){
+                                Toast.makeText(LoginActivity.this, "Logged in successfully...", Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+
+                                Intent intent = new Intent(LoginActivity.this, StaffAreaActivity.class);
                                 startActivity(intent);
                             } else if (parentDbName.equals("Users")){
                                 Toast.makeText(LoginActivity.this, "Logged in successfully...", Toast.LENGTH_SHORT).show();
