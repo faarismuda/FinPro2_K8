@@ -22,7 +22,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.k8.finalproject2_kelompok8.Model.Products;
@@ -57,8 +56,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -176,7 +175,8 @@ public class HomeActivity extends AppCompatActivity
 
         if (id == R.id.nav_cart)
         {
-
+            Intent intent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(intent);
         }
         else if (id == R.id.nav_orders)
         {

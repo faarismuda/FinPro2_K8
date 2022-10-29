@@ -8,16 +8,20 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.paperdb.Paper;
+
 public class AdminCategoryActivity extends AppCompatActivity {
     private ImageView tShirts, sportsTShirts, femaleDresses, sweathers;
     private ImageView glasses, hatsCaps, walletsBagsPurses, shoes;
     private ImageView headPhonesHandFree, Laptops, watches, mobilePhones;
-    private Button AddNewStaffButton;
+    private Button AddNewStaffButton, AdminLogoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_category);
+
+        AdminLogoutButton = (Button) findViewById(R.id.admin_logout);
 
         tShirts = (ImageView) findViewById(R.id.t_shirts);
         sportsTShirts = (ImageView) findViewById(R.id.sports_t_shirts);
@@ -36,11 +40,22 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
         AddNewStaffButton = (Button) findViewById(R.id.add_new_staff);
 
+        AdminLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Paper.book().destroy();
+
+                Intent intent = new Intent(AdminCategoryActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         AddNewStaffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewStaffActivity.class);
-                intent.putExtra("category", "tShirts");
                 startActivity(intent);
             }
         });
@@ -49,6 +64,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddNewProductActivity.class);
+                intent.putExtra("category", "tShirts");
                 startActivity(intent);
             }
         });

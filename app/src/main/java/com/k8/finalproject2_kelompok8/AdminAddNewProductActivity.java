@@ -1,9 +1,5 @@
 package com.k8.finalproject2_kelompok8;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -121,15 +121,15 @@ public class AdminAddNewProductActivity extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
 
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy ");
         saveCurrentDate = currentDate.format(calendar.getTime());
 
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calendar.getTime());
 
-        productRandomKey = saveCurrentDate + saveCurrentTime;
+        productRandomKey = saveCurrentDate + " " + saveCurrentTime;
 
-        StorageReference filePath = ProductImageRef.child(ImageUri.getLastPathSegment() + productRandomKey + ".jpg");
+        StorageReference filePath = ProductImageRef.child(ImageUri.getLastPathSegment() + " " + productRandomKey + ".jpg");
 
         final UploadTask uploadTask = filePath.putFile(ImageUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
