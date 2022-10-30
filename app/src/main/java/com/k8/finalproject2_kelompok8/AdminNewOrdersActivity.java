@@ -91,6 +91,12 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                                     String uID = getRef(position).getKey();
 
                                     RemoveOrder(uID);
+
+                                    final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
+                                    cartListRef.child("Admin View")
+                                            .child(uID)
+                                            .child("Products")
+                                            .removeValue();
                                 } else {
                                     finish();
                                 }
