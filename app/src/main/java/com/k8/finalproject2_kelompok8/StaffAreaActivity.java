@@ -37,7 +37,7 @@ public class StaffAreaActivity extends AppCompatActivity {
                 Paper.book().destroy();
 
                 Intent intent = new Intent(StaffAreaActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
