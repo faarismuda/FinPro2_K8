@@ -112,6 +112,17 @@ public class ConfirmFinalOrderActivity extends AppCompatActivity {
                             }
                         }
                     });
+//                    FirebaseDatabase.getInstance().getReference().child("Cart List").child("Admin View").child(Prevalent.currentOnlineUser.getPhone()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()){
+//                                Intent intent = new Intent(ConfirmFinalOrderActivity.this, HomeActivity.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                startActivity(intent);
+//                                finish();
+//                            }
+//                        }
+//                    });
                 }
             }
         });

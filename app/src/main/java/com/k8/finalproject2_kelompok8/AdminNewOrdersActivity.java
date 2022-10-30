@@ -1,5 +1,7 @@
 package com.k8.finalproject2_kelompok8;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +44,8 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
         ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders");
         ordersList = findViewById(R.id.orders_list);
         ordersList.setLayoutManager(new LinearLayoutManager(this));
+
+        Toast.makeText(this, "Click a card to display a dialog", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -50,7 +56,7 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
 
         FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder> adapter = new FirebaseRecyclerAdapter<AdminOrders, AdminOrdersViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, final int position, @NonNull AdminOrders model) {
+            protected void onBindViewHolder(@NonNull AdminOrdersViewHolder holder, @SuppressLint("RecyclerView") final int position, @NonNull AdminOrders model) {
                 holder.userName.setText("Name: " + model.getName());
                 holder.userPhoneNumber.setText("Phone: " + model.getPhone());
                 holder.userTotalPrice.setText("$" + model.getTotalAmount());
@@ -65,6 +71,32 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
                         Intent intent = new Intent(AdminNewOrdersActivity.this, AdminUserProductsActivity.class);
                         intent.putExtra("uid", uID);
                         startActivity(intent);
+                    }
+                });
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CharSequence options[] = new CharSequence[]{
+                                "Yes", "No"
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AdminNewOrdersActivity.this);
+
+                        builder.setTitle("Have you shipped this order?");
+                        builder.setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (i == 0){
+                                    String uID = getRef(position).getKey();
+
+                                    RemoveOrder(uID);
+                                } else {
+                                    finish();
+                                }
+                            }
+                        });
+                        builder.show();
                     }
                 });
             }
@@ -95,5 +127,9 @@ public class AdminNewOrdersActivity extends AppCompatActivity {
             userShippingAddress = itemView.findViewById(R.id.order_address_city);
             ShowOrdersBtn = itemView.findViewById(R.id.show_all_products_btn);
         }
+    }
+
+    private void RemoveOrder(String uID) {
+        ordersRef.child(uID).removeValue();
     }
 }

@@ -144,12 +144,14 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else if (parentDbName.equals("Staffs")){
                                 Toast.makeText(LoginActivity.this, "Logged in successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, StaffAreaActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else if (parentDbName.equals("Users")){
                                 Toast.makeText(LoginActivity.this, "Logged in successfully...", Toast.LENGTH_SHORT).show();
                                 loadingBar.dismiss();
@@ -157,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                 Prevalent.currentOnlineUser =  usersData;
                                 startActivity(intent);
+                                finish();
                             }
                         } else {
                             loadingBar.dismiss();
