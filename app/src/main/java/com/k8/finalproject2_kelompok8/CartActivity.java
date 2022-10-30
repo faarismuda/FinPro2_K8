@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,8 +21,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.k8.finalproject2_kelompok8.Model.Cart;
 import com.k8.finalproject2_kelompok8.Prevalent.Prevalent;
 import com.k8.finalproject2_kelompok8.ViewHolder.CartViewHolder;
@@ -30,6 +34,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button NextProcessBtn;
+    private TextView txtMsg1;
 
     private int overTotalPrice = 0;
 
@@ -52,6 +57,7 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         NextProcessBtn = (Button) findViewById(R.id.next_btn);
+        txtMsg1 = (TextView) findViewById(R.id.msg1);
 
         NextProcessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +75,8 @@ public class CartActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        CheckOrderState();
 
         final DatabaseReference cartListRef = FirebaseDatabase.getInstance().getReference().child("Cart List");
 
@@ -147,5 +155,41 @@ public class CartActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         overTotalPrice = 0;
+    }
+
+    private void CheckOrderState(){
+        DatabaseReference ordersRef;
+        ordersRef = FirebaseDatabase.getInstance().getReference().child("Orders").child(Prevalent.currentOnlineUser.getPhone());
+
+        ordersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String shippingState = snapshot.child("state").getValue().toString();
+                    String userName = snapshot.child("name").getValue().toString();
+
+                    if (shippingState.equals("shipped")){
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtMsg1.setVisibility(View.VISIBLE);
+                        txtMsg1.setText("Your order has been shipped successfully. The package will be delivered soon");
+
+                        NextProcessBtn.setVisibility(View.GONE);
+                    } else if (shippingState.equals("not shipped")){
+                        recyclerView.setVisibility(View.GONE);
+
+                        txtMsg1.setVisibility(View.VISIBLE);
+
+                        NextProcessBtn.setVisibility(View.GONE);
+                        Toast.makeText(CartActivity.this, "Other orders cannot be placed before you receive the goods", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
